@@ -1,6 +1,8 @@
-package bean;
+package com.example.bean;
 
-public class PersonBean {
+import java.io.Serializable;
+
+public class PersonBean implements Serializable {
     String userName;
     String name;
     Integer age; // -1代表没有数据

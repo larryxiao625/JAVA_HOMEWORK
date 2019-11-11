@@ -1,6 +1,8 @@
-package bean;
+package com.example.bean;
 
-public class UsersBean {
+import java.io.Serializable;
+
+public class UsersBean implements Serializable {
     String userName;
     String pass;
 

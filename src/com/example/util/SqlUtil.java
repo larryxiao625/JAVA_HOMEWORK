@@ -1,7 +1,10 @@
-import bean.PersonBean;
-import bean.UsersBean;
+package com.example.util;
 
-import java.awt.*;
+import com.example.bean.PersonBean;
+import com.example.bean.UsersBean;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
@@ -44,7 +47,7 @@ public class SqlUtil {
      * @return Statement对象
      * @throws SQLException sql语句错误
      */
-    public static Statement getStatement() throws SQLException {
+    public synchronized static Statement getStatement() throws SQLException {
         if (connection == null) {
             getConnection();
         }
@@ -60,7 +63,7 @@ public class SqlUtil {
      * @param sql  sql语句
      * @param type 操作类型(1为有返回集,2为无返回集)
      */
-    public static ResultSet progressSql(String sql, int type) throws SQLException {
+    public synchronized static ResultSet progressSql(String sql, int type) throws SQLException {
         if (connection == null) {
             getConnection();
         }
@@ -80,19 +83,28 @@ public class SqlUtil {
     /**
      * 展示表数据
      */
-    public static void showTable(ResultSet rs) throws SQLException {
+    public synchronized static JsonArray showTable(ResultSet rs) throws SQLException {
+        JsonArray jsonElements = new JsonArray();
         ResultSetMetaData metaData = rs.getMetaData();
-        for (int i = 0; i < metaData.getColumnCount(); i++) {
-            String columnName = metaData.getColumnName(i + 1);
-            System.out.print(columnName + "\t");
-        }
-        System.out.println();
-        while (rs.next()) {
-            for (int i = 0; i < metaData.getColumnCount(); i++) {
-                System.out.print(String.valueOf(rs.getObject(i + 1)) + "\t");
+//        for (int i = 0; i < metaData.getColumnCount(); i++) {
+//            String columnName = metaData.getColumnName(i + 1);
+//            System.out.print(columnName + "\t");
+//        }
+        try {
+            while (rs.next()) {
+                JsonObject jsonObject = new JsonObject();
+                for (int i = 0; i < metaData.getColumnCount(); i++) {
+                    String columnName = metaData.getColumnLabel(i + 1);
+                    String value = rs.getString(columnName);
+                    jsonObject.addProperty(columnName, value);
+                }
+                jsonElements.add(jsonObject);
             }
-            System.out.println();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
+
+        return jsonElements;
     }
 
     /**
@@ -101,7 +113,7 @@ public class SqlUtil {
      * @param dataBean
      * @return
      */
-    public static boolean isFieldExist(Object dataBean) {
+    public synchronized static boolean isFieldExist(Object dataBean) {
         String type = null;
 
         try {
@@ -140,7 +152,7 @@ public class SqlUtil {
     /**
      * 插入数据操作
      */
-    public static void insertData(List<Object> dataBeanList) {
+    public synchronized static void insertData(List<Object> dataBeanList) {
         String type = null;
         String insertSql = null;
         for (Object dataBean : dataBeanList) {
@@ -210,7 +222,7 @@ public class SqlUtil {
      * @param userName 键名
      * @param type     删除类型(1:全匹配,2:半匹配)
      */
-    public static void deleteUser(String userName, int type) {
+    public synchronized static void deleteUser(String userName, int type) {
         String deleteSql = null;
         PreparedStatement ps = null;
         try {

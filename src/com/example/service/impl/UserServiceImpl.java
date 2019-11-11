@@ -1,6 +1,10 @@
+package com.example.service.impl;
+
 import com.example.bean.PersonBean;
 import com.example.bean.UsersBean;
+import com.example.service.IUser;
 import com.example.util.SqlUtil;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -8,7 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MainActivity {
+@Service
+public class UserServiceImpl implements IUser {
     private static Connection connection;
     private static String showUsersTable = "select * from users";
     private static String showPersonTable = "select * from person";

@@ -1,0 +1,10 @@
+<html>
+    <body style="text-align: center;">
+        <p>数据库操作结果</p>
+        <p id="string"></p>
+        <a href="./result.html">查看数据库数据</a>
+    </body>
+    <script defer>
+    document.querySelector('#string').innerHTML = decodeURI(location.search.split('=')[1])
+    </script>
+</html>
