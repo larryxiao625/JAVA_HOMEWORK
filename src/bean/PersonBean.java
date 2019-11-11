@@ -1,6 +1,6 @@
 package bean;
 
-public class PersonBean extends Object{
+public class PersonBean {
     String userName;
     String name;
     Integer age; // -1代表没有数据

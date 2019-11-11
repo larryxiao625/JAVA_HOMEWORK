@@ -1,6 +1,6 @@
 package bean;
 
-public class UsersBean extends Object{
+public class UsersBean {
     String userName;
     String pass;
 

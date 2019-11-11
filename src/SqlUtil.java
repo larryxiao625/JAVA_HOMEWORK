@@ -33,6 +33,7 @@ public class SqlUtil {
             } catch (ClassNotFoundException | SQLException | IOException e) {
                 e.printStackTrace();
             }
+
         }
         return connection;
     }
@@ -161,7 +162,7 @@ public class SqlUtil {
                         }
                         ps.setString(3, String.valueOf(personBean.getTeleno()));
                         ps.setString(4, personBean.getUserName());
-                        System.out.println(ps.toString());
+//                        System.out.println(ps.toString());
                         ps.executeUpdate();
                     } else {
                         List<Object> usersBeans = new ArrayList<>();
