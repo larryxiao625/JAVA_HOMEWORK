@@ -240,4 +240,39 @@ public class SqlUtil {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 用户登录获取用户密码
+     */
+    public synchronized static ResultSet getLoginPwd(String userName) {
+        String selectSql = "select * from users WHERE username = ?;"; // 防止SQL注入
+        PreparedStatement ps = null;
+        try {
+            ps = getConnection().prepareStatement(selectSql);
+            ps.setString(1, userName);
+            System.out.println(ps.toString());
+            return ps.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 登录成功获取用户数据
+     */
+    public synchronized static ResultSet getUserResult(String userName) {
+        String selectSql = "select * from person WHERE username = ?;"; // 防止SQL注入
+        PreparedStatement ps = null;
+        try {
+            ps = getConnection().prepareStatement(selectSql);
+            ps.setString(1, userName);
+            System.out.println(ps.toString());
+            return ps.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

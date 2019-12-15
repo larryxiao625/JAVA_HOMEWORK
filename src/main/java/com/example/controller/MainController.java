@@ -1,14 +1,13 @@
 package com.example.controller;
 
+import com.example.bean.UsersBean;
 import com.example.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.Console;
 
 @CrossOrigin("*")
 @RestController
@@ -47,6 +46,16 @@ public class MainController {
     @RequestMapping(value = "/deleteUsers", method = RequestMethod.GET)
     public Object deleteUser(HttpServletRequest request) {
         return userService.deleteUser(request);
+    }
+
+    @RequestMapping(value = "/loginWithPassword", method = RequestMethod.POST)
+    public Object loginWithPwd(@RequestBody UsersBean usersBean) {
+        return userService.loginWithPwd(usersBean);
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public Object register(HttpServletRequest request) {
+        return userService.register(request);
     }
 
 }
