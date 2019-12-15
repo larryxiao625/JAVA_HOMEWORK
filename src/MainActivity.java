@@ -1,6 +1,6 @@
-import com.example.bean.PersonBean;
-import com.example.bean.UsersBean;
-import com.example.util.SqlUtil;
+import main.java.com.example.bean.PersonBean;
+import main.java.com.example.bean.UsersBean;
+import main.java.com.example.util.SqlUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
