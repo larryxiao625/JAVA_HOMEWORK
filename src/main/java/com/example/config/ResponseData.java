@@ -53,7 +53,6 @@ public class ResponseData implements Serializable {
         this.code = code;
         this.data = data;
         this.message = message;
-
         return this;
     }
 

@@ -1,9 +1,10 @@
 package com.example.util;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.example.bean.PersonBean;
 import com.example.bean.UsersBean;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.mysql.cj.xdevapi.JsonArray;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -83,8 +84,8 @@ public class SqlUtil {
     /**
      * 展示表数据
      */
-    public synchronized static JsonArray showTable(ResultSet rs) throws SQLException {
-        JsonArray jsonElements = new JsonArray();
+    public synchronized static JSONArray showTable(ResultSet rs) throws SQLException {
+        JSONArray jsonElements = new JSONArray();
         ResultSetMetaData metaData = rs.getMetaData();
 //        for (int i = 0; i < metaData.getColumnCount(); i++) {
 //            String columnName = metaData.getColumnName(i + 1);
@@ -92,11 +93,11 @@ public class SqlUtil {
 //        }
         try {
             while (rs.next()) {
-                JsonObject jsonObject = new JsonObject();
+                JSONObject jsonObject = new JSONObject();
                 for (int i = 0; i < metaData.getColumnCount(); i++) {
                     String columnName = metaData.getColumnLabel(i + 1);
                     String value = rs.getString(columnName);
-                    jsonObject.addProperty(columnName, value);
+                    jsonObject.put(columnName, value);
                 }
                 jsonElements.add(jsonObject);
             }
